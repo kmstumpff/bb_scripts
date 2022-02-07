@@ -1,0 +1,17 @@
+{
+  "name": "database",
+  "type": "module",
+  "version": "1.0.0",
+  "description": "database",
+  "main": "test.js",
+  "engines": {
+    "node": "12.19.0"
+  },
+  "scripts": {
+    "test": "node ./test.js"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+  }
+}

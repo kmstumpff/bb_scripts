@@ -17,7 +17,7 @@ export async function main(ns) {
 
 	ns.clearPort(LOG_PORT);
 	ns.clearPort(LOG_LOCK_PORT);
-	await ns.writePort(LOG_LOCK_PORT, "lock")
+	await ns.writePort(LOG_LOCK_PORT, "lock");
 	const log_file = ns.args[0] | 'remote_log.txt';
 	
 	while (true) {

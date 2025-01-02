@@ -35,7 +35,7 @@ const command_list = {
         'description': "Get status of the database service"
     }
 }
-const default_command = 'help'
+const default_command = 'start'
 
 /** @param {NS} ns **/
 export async function database_module(ns) {

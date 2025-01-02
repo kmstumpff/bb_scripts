@@ -1,0 +1,5 @@
+{
+    "bitburner.fileWatcher.enable": true,
+    "bitburner.scriptRoot": "./vscode",
+    "bitburner.showPushSuccessNotification": true
+}

@@ -1,5 +1,6 @@
 const CLIENT_PORT = 8;
 const SERVER_PORT = 9;
+const PWN_LOCK_PORT = 10;
 
 
 const BLACKLIST = ["home", "darkweb", "avmnite-02h", "CSEC"];
@@ -13,12 +14,14 @@ export async function main(ns) {
 
 	ns.clearPort(CLIENT_PORT);
 	ns.clearPort(SERVER_PORT);
+	ns.clearPort(PWN_LOCK_PORT);
+	await ns.writePort(PWN_LOCK_PORT, "lock");
 	
 	while (true) {
 		const data = ns.readPort(SERVER_PORT);
 		if (data != 'NULL PORT DATA') {
 			pwned.push(data);
-			ns.print(data);
+			await ns.writePort(PWN_LOCK_PORT, "lock")
 		} else {
 			ns.clearPort(CLIENT_PORT);
 			const data = pwned.join(",")
@@ -29,6 +32,18 @@ export async function main(ns) {
 		await ns.sleep(5);
 	}
 
+}
+
+async function lock_wait(ns) {
+	let locked = false;
+	while (!locked) {
+		const data = ns.readPort(PWN_LOCK_PORT);
+		if (data == 'lock') {
+			locked = true;
+		} else {
+			await ns.sleep(100);
+		}
+	}
 }
 
 export async function is_pwned(ns, target) {
@@ -71,5 +86,6 @@ export async function get_all_pwned(ns) {
 	return pwned;
 }
 export async function pwned(ns, target) {
+	await lock_wait(ns);
 	await ns.writePort(SERVER_PORT, target)
 }

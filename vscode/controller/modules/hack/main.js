@@ -8,11 +8,14 @@ import { run_command } from '/controller/utilities/commands.js';
 
 
 const hack_watcher_filename = "/controller/modules/hack/hack_watcher.js";
-const forlmulas_filename = "Formulas.exe";
+const formulas_filename = "Formulas.exe";
 
 /** @param {NS} ns **/
-async function start_watcher(ns) {
-    exec(ns, hack_watcher_filename, [])
+function start_watcher(ns) {
+    const host = ns.getHostname();
+    if (!ns.isRunning(hack_watcher_filename, host)) {
+        exec(ns, hack_watcher_filename, [])
+    }
 }
 
 /** @param {NS} ns **/
@@ -22,7 +25,7 @@ async function start_remote(ns) {
 
 /** @param {NS} ns **/
 async function start_local(ns) {
-    const has_formulas = ns.fileExists(forlmulas_filename, "home");
+    const has_formulas = ns.fileExists(formulas_filename, "home");
     if (has_formulas) {
         await hack_locally_advanced(ns);
     } else {

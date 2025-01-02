@@ -2,7 +2,7 @@ import { is_pwned, pwned } from '/controller/modules/pwn/pwn_watcher.js'
 import { remote_log, LOG_LEVELS } from '/controller/modules/logger/remote_logger.js'
 
 const pwn_filename = "/controller/modules/pwn/pwn.js";
-const pwn_all_filename = "/controller/modules/pwn/pwn_all.js";
+const pwn_all_filename = "/controller/modules/pwn/pwn_all_remote.js";
 const pwn_watcher_filename = "/controller/modules/pwn/pwn_watcher.js";
 const remote_logger_filename = "/controller/modules/logger/remote_logger.js";
 
@@ -19,7 +19,7 @@ export async function pwn_all_remote(ns) {
 		const scp_filenames = [pwn_filename, pwn_all_filename, pwn_watcher_filename, remote_logger_filename];
 
 		for (const f in scp_filenames) {
-			const success = await ns.scp(scp_filenames, "home", host);
+			const success = await ns.scp(scp_filenames[f], host, "home");
 			if (!success) {
 				await remote_log(ns, "Unable to scp file " + scp_filenames[f] + " to host: " + host, LOG_LEVELS.ERROR);
 			}

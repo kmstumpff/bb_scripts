@@ -12,6 +12,7 @@ import { run_command } from '/controller/utilities/commands.js'
 const command_list = {
     'start': {
         'func': async function(ns) {
+            await database_module(ns);
             await logger_module(ns);
             await pwn_module(ns);
             await hack_module(ns);
